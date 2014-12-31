@@ -28,7 +28,7 @@ void display(const labeled_feat feature);
 void display(const labeled_data features);
 void display(const distance_data dis_data);
 void display(const std::vector<vector<double> > plotd);
-
+	
 class eval{
 	private:
 		bool issort;
@@ -51,8 +51,8 @@ class eval{
 				std::cerr<<"must getplotdata before"<<endl;
 			display(plotdata);
 		};
-		void preproc();   				//normalize vector
-		void compdistance();			//computing distance
+		void preproc();           //normalize vector
+		void compdistance();      //computing distance
 		void sort();                    //sort distance
 		void getplotdata(int maxnum );             //get plot data
 		void showplotend() { display(plotend);};
@@ -63,5 +63,4 @@ class eval{
 		vector<double> plotend;
 };
 
-
-#endif 
+#endif

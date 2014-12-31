@@ -1,5 +1,5 @@
 #include "eval.hpp"
-
+#include "math_functions.hpp"
 bool sort_distance(const distance& left, const distance& right){
 	return (double)left.first < (double)right.first;
 };
@@ -23,7 +23,8 @@ void eval::compdistance(){
 		// computing the distance between i th feature and j th feature 
 		for (int j = 0; j < data.size(); ++j){
 			feature t_feature = data[i].first - data[j].first; 
-			distance t_dis(norm_1(element_prod(t_feature, t_feature)), data[j].second);
+			// distance t_dis(norm_1(element_prod(t_feature, t_feature)), data[j].second);
+			distance t_dis(gyf::ddot(t_feature, t_feature), data[j].second);
 			// input distance into i th feature
 			distan_feat.first.push_back(t_dis);
 		}

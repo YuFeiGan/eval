@@ -1,7 +1,4 @@
-!eval.cpp
-!eval.hpp
-!main.cpp
-!Convert.hpp
-!Convert.cpp
-!math_functions.cpp
-!math_functions.hpp
+test
+eval
+*.o
+*.sublime-workspace

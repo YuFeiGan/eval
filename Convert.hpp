@@ -20,5 +20,4 @@ public:
 	labeled_data data;
 };
 
-
 #endif
