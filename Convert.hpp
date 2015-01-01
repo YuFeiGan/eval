@@ -8,16 +8,14 @@
 
 using namespace boost::numeric::ublas;
 
-class matlab2eval{
-public:
-	matlab2eval(const std::string inputfilename){
-		filename = inputfilename;
-	};
-	~matlab2eval(){};
-	labeled_data getdata();
+class matlab2eval {
+  public:
+    matlab2eval(const std::string inputfilename): filename(inputfilename) {};
+    ~matlab2eval() {};
+    labeled_data getdata();
 
-	std::string filename;
-	labeled_data data;
+    std::string filename;
+    labeled_data data;
 };
 
 #endif

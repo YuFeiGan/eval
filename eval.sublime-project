@@ -28,12 +28,13 @@
     "build_systems":
     [
         {
-			"name": "Run",
+			"name": "run_eval",
 			//"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
 			"cmd": ["bash",
 					"-c",
 					// "clang++ math_functions.cpp eval.cpp Convert.cpp main.cpp -I /usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -l openblas -o run && ./run>>computedis.txt"
-					"clang++ math_functions.cpp test.cpp -I /usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -l openblas -o run && ./run"
+					// "clang++ math_functions.cpp test.cpp -I /usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -l openblas -o run && ./run"
+					"clang++ thread6.cpp -l boost_thread-mt -l boost_system -o run && ./run"
 					]
 
 
@@ -42,6 +43,7 @@
 				// "-L /usr/local/lib",
 				// " -l opencv_highgui -l opencv_core -l opencv_imgproc -l opencv_ml",
 				// " -o '${file_path}/${file_base_name}' && '${file_path}/${file_base_name}'"]
+	
 		}
     ]
 }

@@ -1,3 +1,6 @@
+#ifndef MATH_FUNCTIONS_HPP
+#define MATH_FUNCTIONS_HPP
+
 #include <cblas.h>
 #include <boost/numeric/ublas/vector.hpp>
 using namespace boost::numeric::ublas;
@@ -8,3 +11,5 @@ namespace gyf{
 	vector<double> axpy(const vector<double> A, const vector<double> B);
 	double computedis(const vector<double> A, const vector<double> B);
 }
+
+#endif
