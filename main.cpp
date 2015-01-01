@@ -8,6 +8,7 @@ int main () {
 
 	start = std::clock();
 	matlab2eval t0("test/output.txt");
+	cout<<"test/output2.txt";
 	labeled_data features = t0.getdata();
 	eval t(features);
 	duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;

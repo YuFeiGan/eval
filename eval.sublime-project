@@ -4,8 +4,9 @@
 		{
 			"file_exclude_patterns":
 			[
-				"eval.sublime-workspace"
-				// ".gitignore"
+				"eval.sublime-workspace",
+				".gitignore",
+				"run"
 				
 			],
 			"folder_exclude_patterns":
@@ -31,7 +32,8 @@
 			//"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
 			"cmd": ["bash",
 					"-c",
-					"clang++ math_functions.cpp eval.cpp Convert.cpp main.cpp -I /usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -l openblas -o run && ./run"
+					// "clang++ math_functions.cpp eval.cpp Convert.cpp main.cpp -I /usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -l openblas -o run && ./run>>computedis.txt"
+					"clang++ math_functions.cpp test.cpp -I /usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -l openblas -o run && ./run"
 					]
 
 
