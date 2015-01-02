@@ -32,9 +32,9 @@
 			//"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
 			"cmd": ["bash",
 					"-c",
-					// "clang++ math_functions.cpp eval.cpp Convert.cpp main.cpp -I /usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -l openblas -o run && ./run>>computedis.txt"
+					"clang++ math_functions.cpp eval.cpp Convert.cpp main.cpp -I /usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -l openblas -l boost_system -l boost_thread-mt -o run && ./run>>computedis.txt"
 					// "clang++ math_functions.cpp test.cpp -I /usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -l openblas -o run && ./run"
-					"clang++ thread6.cpp -l boost_thread-mt -l boost_system -o run && ./run"
+					// "clang++ test2.cpp -l boost_thread-mt -l boost_system -o run && ./run"
 					]
 
 

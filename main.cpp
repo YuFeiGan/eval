@@ -1,43 +1,32 @@
 #include "eval.hpp"
 #include "Convert.hpp"
-#include <ctime>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
-int main () {   
-	std::clock_t start;
-	double duration;
+int main () {
+    boost::posix_time::ptime start;
+    boost::posix_time::ptime end;
 
-	start = std::clock();
-	matlab2eval t0("test/output.txt");
-	cout<<"test/output2.txt";
-	labeled_data features = t0.getdata();
-	eval t(features);
-	duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-	std::cout<<"eval t(features);"<<endl<< duration <<endl<<endl;
-	// int a;
+    matlab2eval t0("test/output.txt");
+    labeled_data features = t0.getdata();
+    eval t(features);
 
-	start = std::clock();
-	t.preproc();
-	duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-	std::cout<<"t.preproc();"<<endl<< duration <<endl<<endl;
-	// t.showdata();
+    ///////////////////////////////
+    t.preproc();
+    ///////////////////////////////
+    start = boost::posix_time::microsec_clock::local_time();
+    t.compdistance0();
+    end = boost::posix_time::microsec_clock::local_time();
+    std::cout << "compdistance0: " << (end - start).total_seconds() << " s\n";
+    ///////////////////////////////
+    start = boost::posix_time::microsec_clock::local_time();
+    t.sort();
+    end = boost::posix_time::microsec_clock::local_time();
+    std::cout << "sort: " << (end - start).total_seconds() << " s\n";
+    ///////////////////////////////
+    t.getplotdata(100);
 
-	start = std::clock();
-	t.compdistance();
-	duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-	std::cout<<"t.compdistance();"<<endl<< duration <<endl<<endl;
 
-	start = std::clock();
-	t.sort();
-	duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-	std::cout<<"t.sort();"<<endl<< duration <<endl<<endl;
-
-	// t.showdistance();
-	start = std::clock();
-	t.getplotdata(100);
-	duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-	std::cout<<"t.getplotdata(100);"<<endl<< duration <<endl<<endl;
-
-	// t.showdata();
-	// t.showdistance();
-	return 0;
+    // t.showdata();
+    // t.showdistance();
+    return 0;
 }

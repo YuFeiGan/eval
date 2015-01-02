@@ -33,9 +33,13 @@ class eval {
   private:
     bool issort;
     bool isgetplotdata;
+    // for multi-thread
+    void thread_comp();
+    int index;
+    int datasize;
     // static int maxnum_;
   public:
-    eval(const labeled_data input): issort(false), isgetplotdata(false), data(input) {};
+    eval(const labeled_data input): issort(false), isgetplotdata(false), data(input), index(0), datasize(input.size()) {};
     ~eval() {};
     void showdata() {
         display(data);
@@ -50,6 +54,7 @@ class eval {
     };
     void preproc();           //normalize vector
     void compdistance();      //computing distance
+    void compdistance0();      //computing distance using multi-thread
     void sort();                    //sort distance
     void getplotdata(int maxnum );             //get plot data
     void showplotend() {

@@ -4,47 +4,62 @@
 #include <boost/thread/condition.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/thread/xtime.hpp>
-const int threadnum = 4;
-int number = 0;
-boost::mutex readdata;
 
-bool sort_distance(const distance &left, const distance &right) {
+const int threadnum = 3;
+boost::mutex read_mutex;
+boost::mutex write_mutex;
+
+inline bool sort_distance(const distance &left, const distance &right) {
     return (double)left.first < (double)right.first;
 };
 
-distance_feat usethreads(labeled_data data, distance_feat distan_feat, int index) {
-
-    struct writer1 {
-        int id;
-        const labeled_data t_data;
-        distance_feat t_distan_feat;
-        const int t_index;
-
-        writer1(labeled_data data, int index, distance_feat distan_feat, int id) : t_data(data), t_index(index), t_distan_feat(distan_feat), id(id) {};
-
-        void operator()() {
-            while (number < t_data.size()) {
-                boost::mutex::scoped_lock sl(readdata);
-                distance t_dis(gyf::computedis(t_data[t_index].first, t_data[number].first), t_data[number].second);
-                // input distance into i th feature
-                t_distan_feat.first.push_back(t_dis);
-                ++number;
-
+void eval::thread_comp(void) {
+    labeled_data t_data;
+    distance_feat t_distan_feat;
+    distance t_dis;
+    int t_index = 0;
+    {
+        // read data
+        boost::mutex::scoped_lock lock(read_mutex);
+        t_data = data;
+    }
+    while ( index < datasize) {
+        {
+            // read index data
+            boost::mutex::scoped_lock lock(read_mutex);
+            if (index >= datasize) {
+                break;
             }
+            t_index = index;    // get unprocessed index
+            ++index;            // next index
+        }
+        // process data
+        t_distan_feat.second = t_data[t_index].second;
+
+        for (int j = 0; j < datasize; ++j) {
+            t_dis.first = gyf::computedis(t_data[t_index].first, t_data[j].first);
+            t_dis.second =  t_data[j].second;
+            // input distance into i th feature
+            t_distan_feat.first.push_back(t_dis);
         }
 
-    };
-
-    std::vector<boost::thread *> t_v;
-    for (int i = 0; i < threadnum; ++i)
-        t_v.push_back(new boost::thread(writer1(data, index, distan_feat, i)));
-
-    for (int i = 0; i < threadnum; ++i) {
-        t_v[i]->join();
-        delete t_v[i];
+        {
+            // write data
+            boost::mutex::scoped_lock lock(write_mutex);
+            distan.push_back(t_distan_feat);
+        }
+        t_distan_feat.first.clear();
     }
-};
+}
 
+
+void eval::compdistance0() {
+    boost::thread_group group;
+    for (int i = 0; i < threadnum; ++i) {
+        group.create_thread(boost::bind(&eval::thread_comp, this));
+    }
+    group.join_all();
+};
 void eval::compdistance() {
     for (int i = 0; i < data.size(); ++i) {
         // computing i th feature's distance
